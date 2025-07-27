@@ -1,0 +1,1 @@
+uvicorn osbot_fast_api_serverless.lambdas.handler:app --reload --host 0.0.0.0 --port 10000

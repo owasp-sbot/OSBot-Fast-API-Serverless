@@ -1,0 +1,15 @@
+# for main app
+osbot-aws
+osbot-fast-api
+mangum
+
+# for local-stack support
+osbot_local_stack
+
+# for pytest
+pytest
+pytest-cov
+
+# for fastapi testing
+httpx
+requests
