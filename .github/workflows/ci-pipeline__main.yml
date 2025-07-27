@@ -25,6 +25,10 @@ jobs:
 
       - name: "run-tests"
         uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
+        env:
+          FAST_API__AUTH__API_KEY__NAME: 'api-key__in_github_test'
+          FAST_API__AUTH__API_KEY__VALUE: 'this-is-the-value-of-the-api-key'
+
 
   increment-tag:
     name: Increment Tag - Main
