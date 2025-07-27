@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Start Local Stack
+        uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/docker__local-stack@dev           # start LocalStack in GitHub actions
+        with:
+          LOCAL_STACK_SERVICES: 's3,lambda,iam,logs'
+
       - name: "run-tests"
         uses: owasp-sbot/OSBot-GitHub-Actions/.github/actions/pytest__run-tests@dev
 
