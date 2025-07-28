@@ -1,10 +1,10 @@
-from fastapi                                                      import FastAPI
-from osbot_utils.utils.Env                                        import set_env
-from osbot_aws.testing.Temp__Random__AWS_Credentials              import Temp_AWS_Credentials
-from osbot_local_stack.local_stack.Local_Stack                    import Local_Stack
-from osbot_utils.type_safe.Type_Safe                              import Type_Safe
-from starlette.testclient                                         import TestClient
-from osbot_fast_api_serverless.core.fast_api.Serverless__Fast_API import Serverless__Fast_API
+from fastapi                                                 import FastAPI
+from osbot_utils.utils.Env                                   import set_env
+from osbot_aws.testing.Temp__Random__AWS_Credentials         import Temp_AWS_Credentials
+from osbot_local_stack.local_stack.Local_Stack               import Local_Stack
+from osbot_utils.type_safe.Type_Safe                         import Type_Safe
+from starlette.testclient                                    import TestClient
+from osbot_fast_api_serverless.fast_api.Serverless__Fast_API import Serverless__Fast_API
 
 Serverless__Fast_API__TEST__AWS_ACCOUNT_ID     = '000000000000'               # default local-stack account id for lambdas
 Serverless__Fast_API__TEST__AWS_DEFAULT_REGION = 'us-east-1'                  # default local-stack region for lambdas

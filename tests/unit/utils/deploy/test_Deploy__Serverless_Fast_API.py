@@ -1,21 +1,21 @@
 import requests
-from unittest                                                                           import TestCase
-from osbot_utils.utils.Env                                                              import get_env
-from osbot_fast_api.api.Fast_API                                                        import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
-from osbot_aws.deploy.Deploy_Lambda                                                     import Deploy_Lambda
-from osbot_utils.utils.Objects                                                          import __
-from osbot_fast_api_serverless.utils.Version                                            import version__osbot_fast_api_serverless
-from osbot_fast_api_serverless.utils.deploy.Deploy__Serverless__Fast_API                import Deploy__Serverless__Fast_API
-from osbot_fast_api_serverless.utils.deploy.Schema__AWS_Setup__Serverless__Fast_API     import Schema__AWS_Setup__Serverless__Fast_API
-from osbot_fast_api_serverless.utils.testing.skip_tests                                 import skip__if_not__in_github_actions
-from tests.serverless_fast_api__objs_for_tests                                          import Serverless__Fast_API__TEST__AWS_ACCOUNT_ID, \
+from unittest                                                                     import TestCase
+from osbot_utils.utils.Env                                                        import get_env
+from osbot_fast_api.api.Fast_API                                                  import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
+from osbot_aws.deploy.Deploy_Lambda                                               import Deploy_Lambda
+from osbot_utils.utils.Objects                                                    import __
+from osbot_fast_api_serverless.utils.Version                                      import version__osbot_fast_api_serverless
+from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API                import Deploy__Serverless__Fast_API
+from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API     import Schema__AWS_Setup__Serverless__Fast_API
+from osbot_fast_api_serverless.utils.testing.skip_tests                           import skip__if_not__in_github_actions
+from tests.serverless_fast_api__objs_for_tests                                    import Serverless__Fast_API__TEST__AWS_ACCOUNT_ID, \
     Serverless__Fast_API__TEST__AWS_DEFAULT_REGION, setup_local_stack
 
 
 class test_Deploy__Serverless_Fast_API(TestCase):
     @classmethod
     def setUpClass(cls):
-        skip__if_not__in_github_actions()
+        #skip__if_not__in_github_actions()
         setup_local_stack()                                                 # deploy lambda to localstack
         cls.deploy_serverless_fast_api = Deploy__Serverless__Fast_API()
 

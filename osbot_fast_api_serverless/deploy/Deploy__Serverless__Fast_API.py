@@ -1,15 +1,16 @@
-from osbot_utils.helpers.Random_Guid                                                 import Random_Guid
-from osbot_utils.utils.Env                                                           import get_env
-from osbot_fast_api.api.Fast_API                                                     import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
-from osbot_aws.AWS_Config                                                            import AWS_Config
-from osbot_aws.deploy.Deploy_Lambda                                                  import Deploy_Lambda
-from osbot_aws.helpers.Lambda_Upload_Package                                         import Lambda_Upload_Package
-from osbot_utils.decorators.methods.cache_on_self                                    import cache_on_self
-from osbot_utils.helpers.Safe_Id                                                     import Safe_Id
-from osbot_utils.helpers.duration.decorators.capture_duration                        import capture_duration
-from osbot_utils.type_safe.Type_Safe                                                 import Type_Safe
-from osbot_fast_api_serverless.lambdas.handler                                       import LAMBDA_DEPENDENCIES, run
-from osbot_fast_api_serverless.utils.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
+from osbot_utils.helpers.Random_Guid                                           import Random_Guid
+from osbot_utils.utils.Env                                                     import get_env
+
+from osbot_aws.aws.lambda_.dependencies.Lambda_Upload_Package import Lambda__Upload_Package
+from osbot_fast_api.api.Fast_API                                               import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
+from osbot_aws.AWS_Config                                                      import AWS_Config
+from osbot_aws.deploy.Deploy_Lambda                                            import Deploy_Lambda
+from osbot_utils.decorators.methods.cache_on_self                              import cache_on_self
+from osbot_utils.helpers.Safe_Id                                               import Safe_Id
+from osbot_utils.helpers.duration.decorators.capture_duration                  import capture_duration
+from osbot_utils.type_safe.Type_Safe                                           import Type_Safe
+from osbot_fast_api_serverless.fast_api.lambda_handler                         import LAMBDA_DEPENDENCIES, run
+from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
 BASE__LAMBDA_NAME  = 'serverless_fast_api'        # make this a Safe_Str__Lambda_Name
 
@@ -91,17 +92,21 @@ class Deploy__Serverless__Fast_API(Type_Safe):
         return aws_setup
 
     def upload_lambda_dependencies_to_s3(self):
-        status__packages = {}
-        lambda_upload_package = Lambda_Upload_Package()
-        for package in LAMBDA_DEPENDENCIES:
-            with capture_duration()  as duration__install_locally:
-                result__install_locally = lambda_upload_package.install_locally(package)
-            with capture_duration() as duration__upload_to_s3:
-                result__upload_to_s3    = lambda_upload_package.upload_to_s3(package)
+        with Lambda__Upload_Package() as _:
+            return _.upload_lambda_dependencies(LAMBDA_DEPENDENCIES)
+            # status__packages = {}
+            # for package in LAMBDA_DEPENDENCIES:
+            #     if
+            #     with capture_duration()  as duration__install_locally:
+            #         result__install_locally = lambda_upload_package.install_locally(package)
+            #     with capture_duration() as duration__upload_to_s3:
+            #         result__upload_to_s3    = lambda_upload_package.upload_to_s3(package)
+            #
+            #     status__package = dict(duration__install_locally = duration__install_locally.seconds,
+            #                            duration__upload_to_s3    = duration__upload_to_s3   .seconds,
+            #                            result__install_locally   = result__install_locally  ,
+            #                            result__upload_to_s3      = result__upload_to_s3     )
+            #     status__packages[package] = status__package
+            # return status__packages
 
-            status__package = dict(duration__install_locally = duration__install_locally.seconds,
-                                   duration__upload_to_s3    = duration__upload_to_s3   .seconds,
-                                   result__install_locally   = result__install_locally  ,
-                                   result__upload_to_s3      = result__upload_to_s3     )
-            status__packages[package] = status__package
-        return status__packages
+

@@ -1,7 +1,7 @@
-from osbot_fast_api.api.Fast_API                                 import Fast_API
-from mangum                                                      import Mangum
-from osbot_utils.utils.Env                                       import load_dotenv
-from osbot_fast_api_serverless.core.fast_api.routes.Routes__Info import Routes__Info
+from osbot_fast_api.api.Fast_API                            import Fast_API
+from mangum                                                 import Mangum
+from osbot_utils.utils.Env                                  import load_dotenv
+from osbot_fast_api_serverless.fast_api.routes.Routes__Info import Routes__Info
 
 
 class Serverless__Fast_API(Fast_API):
