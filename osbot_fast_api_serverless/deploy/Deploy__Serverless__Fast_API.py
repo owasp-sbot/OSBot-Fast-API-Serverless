@@ -1,3 +1,4 @@
+from osbot_aws.aws.lambda_.Lambda                                              import DEFAULT__LAMBDA__EPHEMERAL_STORAGE, DEFAULT__LAMBDA__MEMORY_SIZE
 from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
 from osbot_utils.helpers.Random_Guid                                           import Random_Guid
 from osbot_utils.utils.Env                                                     import get_env
@@ -10,16 +11,14 @@ from osbot_utils.type_safe.Type_Safe                                           i
 from osbot_fast_api_serverless.fast_api.lambda_handler                         import run, LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
-BASE__LAMBDA_NAME  = 'serverless_fast_api'        # make this a Safe_Str__Lambda_Name
-
+BASE__LAMBDA_NAME__FAST_API__SERVERLESS  = 'fast-api__serverless'        # make this a Safe_Str__Lambda_Name
 
 
 class Deploy__Serverless__Fast_API(Type_Safe):
-    stage    : Safe_Id = Safe_Id('dev')
-
-    @cache_on_self
-    def aws_config(self):
-        return AWS_Config()
+    aws_config       : AWS_Config
+    stage            : Safe_Id = Safe_Id('dev')
+    ephemeral_storage: int = DEFAULT__LAMBDA__EPHEMERAL_STORAGE
+    memory_size      : int = DEFAULT__LAMBDA__MEMORY_SIZE
 
     @cache_on_self
     def api_key__name(self):
@@ -35,8 +34,13 @@ class Deploy__Serverless__Fast_API(Type_Safe):
 
     @cache_on_self
     def deploy_lambda(self):
-        with Deploy_Lambda(run, lambda_name=self.lambda_name()) as _:
-            _.add_osbot_aws()
+        kwargs = dict(lambda_name       = self.lambda_name()    ,
+                      stage             = self.stage            ,
+                      ephemeral_storage = self.ephemeral_storage,
+                      memory_size       = self.memory_size      )
+        with Deploy_Lambda(run, **kwargs) as _:
+            #_.add_osbot_aws()
+            _.add_file__boto3__lambda()                     # this file allows the dynamically load of dependencies
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__NAME , self.api_key__name ())
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, self.api_key__value())
             return _
@@ -65,8 +69,7 @@ class Deploy__Serverless__Fast_API(Type_Safe):
             return function_url
 
     def lambda_name(self):
-        return BASE__LAMBDA_NAME
-        #return f'{BASE__LAMBDA_NAME}__{self.stage}'
+        return BASE__LAMBDA_NAME__FAST_API__SERVERLESS
 
     def lambda_function(self):
         return self.deploy_lambda().lambda_function()
@@ -78,7 +81,7 @@ class Deploy__Serverless__Fast_API(Type_Safe):
 
         kwargs = dict(bucket__osbot_lambdas__exists = self.s3().bucket_exists(self.lambda_files_bucket_name()),
                       bucket__osbot_lambdas__name   = self.lambda_files_bucket_name(),
-                      current_aws_region            = self.aws_config().region_name())
+                      current_aws_region            = self.aws_config.region_name())
 
         aws_setup = Schema__AWS_Setup__Serverless__Fast_API(**kwargs)
         with aws_setup as _:
