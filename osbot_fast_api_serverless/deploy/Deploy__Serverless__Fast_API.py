@@ -1,3 +1,4 @@
+from osbot_utils.utils.Http                                                    import GET_json
 from osbot_utils.utils.Objects                                                 import obj
 from osbot_aws.aws.lambda_.Lambda                                              import DEFAULT__LAMBDA__EPHEMERAL_STORAGE, DEFAULT__LAMBDA__MEMORY_SIZE
 from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
@@ -13,7 +14,10 @@ from osbot_fast_api_serverless.fast_api.lambda_handler                         i
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
 BASE__LAMBDA_NAME__FAST_API__SERVERLESS  = 'fast-api__serverless'        # make this a Safe_Str__Lambda_Name
-
+DEFAULT__ERROR_MESSAGE__WHEN_FAST_API_IS_OK = ('The adapter was unable to infer a handler to use for the '
+                                                'event. This is likely related to how the Lambda function was '
+                                                'invoked. (Are you testing locally? Make sure the request '
+                                                'payload is valid for a supported handler.)')
 
 class Deploy__Serverless__Fast_API(Type_Safe):
     aws_config       : AWS_Config
@@ -45,9 +49,14 @@ class Deploy__Serverless__Fast_API(Type_Safe):
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, self.api_key__value())
             return _
 
-    def delete_function(self):
+    def delete(self):
         return self.lambda_function().delete()
 
+    def create(self):
+        if self.create_or_update__lambda_function():
+            self.create__lambda_function__url()
+            return True
+        return False
 
     def create_or_update__lambda_function(self):
         with self.deploy_lambda() as _:
@@ -68,6 +77,15 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                 result = _.function_url_create_with_public_access()
                 function_url = result.get('function_url_create').get('FunctionUrl')
             return function_url
+
+    def invoke(self, payload=None):
+        return self.lambda_function().invoke(payload)
+
+    def invoke__function_url(self, path=''):
+        with self.lambda_function() as _:
+            url     = _.function_url() +  path
+            headers = { self.api_key__name(): self.api_key__value()}
+            return GET_json(url, headers=headers)
 
     def lambda_configuration(self):
         return obj(self.lambda_function().info().get('Configuration'))

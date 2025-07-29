@@ -6,7 +6,7 @@ from osbot_utils.utils.Objects                                     import __
 from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API import Deploy__Serverless__Fast_API
 
 
-class test_deploy_lambda__to_aws(TestCase):
+class test_deploy_lambda__to_aws__dev(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -59,4 +59,4 @@ class test_deploy_lambda__to_aws(TestCase):
 
     def test_4__delete_function(self):
         with self.deploy_fast_api as _:
-            assert _.delete_function() is True
+            assert _.delete() is True

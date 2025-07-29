@@ -366,14 +366,14 @@ uvicorn = "*"
 
 [[package]]
 name = "osbot-utils"
-version = "2.70.0"
+version = "2.71.0"
 description = "OWASP Security Bot - Utils"
 optional = false
 python-versions = "<4.0,>=3.7"
 groups = ["main"]
 files = [
-    {file = "osbot_utils-2.70.0-py3-none-any.whl", hash = "sha256:f9bcdbaf2a229c865fd1084a18359ab9dc8cb07f7491c66b38f5a6b0b6518e4c"},
-    {file = "osbot_utils-2.70.0.tar.gz", hash = "sha256:313a9a4c55c685ea92c3a55d85f4aa844d88262e1aa76d968304994aa6fa02c3"},
+    {file = "osbot_utils-2.71.0-py3-none-any.whl", hash = "sha256:d027e8a2486ebf38e944d7d3742a2228db4e20d6616cedb99fbc9f10c4b15c6e"},
+    {file = "osbot_utils-2.71.0.tar.gz", hash = "sha256:3b1555159719dc94b764d1760b3b4510f1fb562a917040d5fe2a1d598f73b0b3"},
 ]
 
 [[package]]
