@@ -10,7 +10,6 @@ from osbot_aws.deploy.Deploy_Lambda                                            i
 from osbot_utils.decorators.methods.cache_on_self                              import cache_on_self
 from osbot_utils.helpers.Safe_Id                                               import Safe_Id
 from osbot_utils.type_safe.Type_Safe                                           import Type_Safe
-from osbot_fast_api_serverless.fast_api.lambda_handler                         import run, LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
 BASE__LAMBDA_NAME__FAST_API__SERVERLESS  = 'fast-api__serverless'        # make this a Safe_Str__Lambda_Name
@@ -43,7 +42,7 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                       stage             = self.stage            ,
                       ephemeral_storage = self.ephemeral_storage,
                       memory_size       = self.memory_size      )
-        with Deploy_Lambda(run, **kwargs) as _:
+        with Deploy_Lambda(self.handler(), **kwargs) as _:
             _.add_file__boto3__lambda()                     # this file allows the dynamically load of dependencies
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__NAME , self.api_key__name ())
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, self.api_key__value())
@@ -87,16 +86,22 @@ class Deploy__Serverless__Fast_API(Type_Safe):
             headers = { self.api_key__name(): self.api_key__value()}
             return GET_json(url, headers=headers)
 
+    def handler(self):                                                          # override to control target
+        from osbot_fast_api_serverless.fast_api.lambda_handler import run
+        return run
+
     def lambda_configuration(self):
         return obj(self.lambda_function().info().get('Configuration'))
+
+    def lambda_dependencies(self):                                              # override to control lambdas dependencies to install, upload and use
+        from osbot_fast_api_serverless.fast_api.lambda_handler import LAMBDA_DEPENDENCIES
+        return LAMBDA_DEPENDENCIES
 
     def lambda_name(self):
         return BASE__LAMBDA_NAME__FAST_API__SERVERLESS
 
     def lambda_function(self):
         return self.deploy_lambda().lambda_function()
-
-
 
     def lambda_files_bucket_name(self):
         return self.lambda_function().s3_bucket
@@ -120,7 +125,7 @@ class Deploy__Serverless__Fast_API(Type_Safe):
 
     def upload_lambda_dependencies_to_s3(self):
         upload_results = {}
-        for package_name in LAMBDA_DEPENDENCIES:
+        for package_name in self.lambda_dependencies():
             with Lambda__Dependency(package_name=package_name) as _:
                 upload_results[package_name] = _.install_and_upload()
         return upload_results
