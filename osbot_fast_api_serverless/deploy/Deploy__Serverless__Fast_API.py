@@ -1,4 +1,3 @@
-from osbot_utils.utils.Dev                                                     import pprint
 from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
 from osbot_utils.helpers.Random_Guid                                           import Random_Guid
 from osbot_utils.utils.Env                                                     import get_env
