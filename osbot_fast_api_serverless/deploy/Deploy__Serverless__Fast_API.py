@@ -1,15 +1,14 @@
+from osbot_utils.utils.Dev                                                     import pprint
+from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
 from osbot_utils.helpers.Random_Guid                                           import Random_Guid
 from osbot_utils.utils.Env                                                     import get_env
-
-from osbot_aws.aws.lambda_.dependencies.Lambda_Upload_Package import Lambda__Upload_Package
 from osbot_fast_api.api.Fast_API                                               import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
 from osbot_aws.AWS_Config                                                      import AWS_Config
 from osbot_aws.deploy.Deploy_Lambda                                            import Deploy_Lambda
 from osbot_utils.decorators.methods.cache_on_self                              import cache_on_self
 from osbot_utils.helpers.Safe_Id                                               import Safe_Id
-from osbot_utils.helpers.duration.decorators.capture_duration                  import capture_duration
 from osbot_utils.type_safe.Type_Safe                                           import Type_Safe
-from osbot_fast_api_serverless.fast_api.lambda_handler                         import LAMBDA_DEPENDENCIES, run
+from osbot_fast_api_serverless.fast_api.lambda_handler                         import run, LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
 BASE__LAMBDA_NAME  = 'serverless_fast_api'        # make this a Safe_Str__Lambda_Name
@@ -91,10 +90,17 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                     raise Exception(result)
         return aws_setup
 
+
     def upload_lambda_dependencies_to_s3(self):
-        with Lambda__Upload_Package() as _:
-            return _.upload_lambda_dependencies(LAMBDA_DEPENDENCIES)
-            # status__packages = {}
+        upload_results = {}
+        for package_name in LAMBDA_DEPENDENCIES:
+            with Lambda__Dependency(package_name=package_name) as _:
+                upload_results[package_name] = _.install_and_upload()
+        return upload_results
+
+        # with Lambda__Upload_Package() as _:
+        #     return _.upload_lambda_dependencies(LAMBDA_DEPENDENCIES)
+        #     status__packages = {}
             # for package in LAMBDA_DEPENDENCIES:
             #     if
             #     with capture_duration()  as duration__install_locally:

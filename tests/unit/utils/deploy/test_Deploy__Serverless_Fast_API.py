@@ -1,14 +1,15 @@
 import requests
-from unittest                                                                     import TestCase
-from osbot_utils.utils.Env                                                        import get_env
-from osbot_fast_api.api.Fast_API                                                  import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
-from osbot_aws.deploy.Deploy_Lambda                                               import Deploy_Lambda
-from osbot_utils.utils.Objects                                                    import __
-from osbot_fast_api_serverless.utils.Version                                      import version__osbot_fast_api_serverless
-from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API                import Deploy__Serverless__Fast_API
-from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API     import Schema__AWS_Setup__Serverless__Fast_API
-from osbot_fast_api_serverless.utils.testing.skip_tests                           import skip__if_not__in_github_actions
-from tests.serverless_fast_api__objs_for_tests                                    import Serverless__Fast_API__TEST__AWS_ACCOUNT_ID, \
+from unittest                                                                       import TestCase
+from osbot_aws.aws.lambda_.schemas.Schema__Lambda__Dependency__Local_Install__Data  import Schema__Lambda__Dependency__Local_Install__Data
+from osbot_utils.utils.Misc                                                         import list_set
+from osbot_utils.utils.Env                                                          import get_env
+from osbot_fast_api.api.Fast_API                                                    import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
+from osbot_aws.deploy.Deploy_Lambda                                                 import Deploy_Lambda
+from osbot_utils.utils.Objects                                                      import __
+from osbot_fast_api_serverless.utils.Version                                        import version__osbot_fast_api_serverless
+from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API                  import Deploy__Serverless__Fast_API
+from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API       import Schema__AWS_Setup__Serverless__Fast_API
+from tests.serverless_fast_api__objs_for_tests                                      import Serverless__Fast_API__TEST__AWS_ACCOUNT_ID, \
     Serverless__Fast_API__TEST__AWS_DEFAULT_REGION, setup_local_stack
 
 
@@ -37,11 +38,14 @@ class test_Deploy__Serverless_Fast_API(TestCase):
 
     def test_2_upload_lambda_dependencies_to_s3(self):
         with self.deploy_serverless_fast_api as _:
+
             status__packages = _.upload_lambda_dependencies_to_s3()
             for package_name, status__package in status__packages.items():
-                assert package_name                                   in ['mangum', 'osbot-fast-api']
-                assert status__package.get('result__install_locally') is True
-                assert status__package.get('result__upload_to_s3'   ) is True
+                assert package_name                  in ['mangum', 'osbot-fast-api']
+                assert list_set(status__package)     == ['local_result', 's3_exists']
+                assert status__package['s3_exists']  is True
+                assert type(status__package['local_result']) is Schema__Lambda__Dependency__Local_Install__Data
+                assert len(status__package['local_result'].installed_files) > 30
 
     def test_3__create_or_update__lambda_function(self):
         with self.deploy_serverless_fast_api as _:

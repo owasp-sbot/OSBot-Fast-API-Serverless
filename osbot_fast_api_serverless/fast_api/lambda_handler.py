@@ -1,6 +1,6 @@
+from osbot_aws.aws.lambda_.boto3__lambda import load_dependencies
+
 LAMBDA_DEPENDENCIES =  ['osbot-fast-api', 'mangum']  # use 'osbot-fast-api==0.7.32' to lock to a particular version of osbot-fast-api
-
-
 
 load_dependencies(LAMBDA_DEPENDENCIES)
 

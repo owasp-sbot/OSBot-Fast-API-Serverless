@@ -20,9 +20,7 @@ serverless_fast_api_test_api = Serverless__Fast_API__Test_APIs()
 
 
 def setup_local_stack() -> Local_Stack:                                         # todo: refactor this to the OSBot_Local_Stack code base
-    Temp_AWS_Credentials().set_vars()
-    set_env('AWS_ACCOUNT_ID'    , Serverless__Fast_API__TEST__AWS_ACCOUNT_ID    )         # todo: fix the Temp_AWS_Credentials so that we don't need use this set_env
-    set_env('AWS_DEFAULT_REGION', Serverless__Fast_API__TEST__AWS_DEFAULT_REGION)
+    Temp_AWS_Credentials().with_localstack_credentials()
     local_stack = Local_Stack().activate()
     return local_stack
 
