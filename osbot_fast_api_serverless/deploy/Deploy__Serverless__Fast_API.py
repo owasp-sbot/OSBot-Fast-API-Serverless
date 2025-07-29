@@ -65,7 +65,8 @@ class Deploy__Serverless__Fast_API(Type_Safe):
             return function_url
 
     def lambda_name(self):
-        return f'{BASE__LAMBDA_NAME}__{self.stage}'
+        return BASE__LAMBDA_NAME
+        #return f'{BASE__LAMBDA_NAME}__{self.stage}'
 
     def lambda_function(self):
         return self.deploy_lambda().lambda_function()
