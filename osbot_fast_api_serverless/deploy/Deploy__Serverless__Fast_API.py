@@ -1,27 +1,29 @@
+from osbot_utils.utils.Http                                                    import GET_json
+from osbot_utils.utils.Objects                                                 import obj
+from osbot_aws.aws.lambda_.Lambda                                              import DEFAULT__LAMBDA__EPHEMERAL_STORAGE, DEFAULT__LAMBDA__MEMORY_SIZE
+from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
 from osbot_utils.helpers.Random_Guid                                           import Random_Guid
 from osbot_utils.utils.Env                                                     import get_env
-
-from osbot_aws.aws.lambda_.dependencies.Lambda_Upload_Package import Lambda__Upload_Package
 from osbot_fast_api.api.Fast_API                                               import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
 from osbot_aws.AWS_Config                                                      import AWS_Config
 from osbot_aws.deploy.Deploy_Lambda                                            import Deploy_Lambda
 from osbot_utils.decorators.methods.cache_on_self                              import cache_on_self
 from osbot_utils.helpers.Safe_Id                                               import Safe_Id
-from osbot_utils.helpers.duration.decorators.capture_duration                  import capture_duration
 from osbot_utils.type_safe.Type_Safe                                           import Type_Safe
-from osbot_fast_api_serverless.fast_api.lambda_handler                         import LAMBDA_DEPENDENCIES, run
+from osbot_fast_api_serverless.fast_api.lambda_handler                         import run, LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API  import Schema__AWS_Setup__Serverless__Fast_API
 
-BASE__LAMBDA_NAME  = 'serverless_fast_api'        # make this a Safe_Str__Lambda_Name
-
-
+BASE__LAMBDA_NAME__FAST_API__SERVERLESS  = 'fast-api__serverless'        # make this a Safe_Str__Lambda_Name
+DEFAULT__ERROR_MESSAGE__WHEN_FAST_API_IS_OK = ('The adapter was unable to infer a handler to use for the '
+                                                'event. This is likely related to how the Lambda function was '
+                                                'invoked. (Are you testing locally? Make sure the request '
+                                                'payload is valid for a supported handler.)')
 
 class Deploy__Serverless__Fast_API(Type_Safe):
-    stage    : Safe_Id = Safe_Id('dev')
-
-    @cache_on_self
-    def aws_config(self):
-        return AWS_Config()
+    aws_config       : AWS_Config
+    stage            : Safe_Id = Safe_Id('dev')
+    ephemeral_storage: int = DEFAULT__LAMBDA__EPHEMERAL_STORAGE
+    memory_size      : int = DEFAULT__LAMBDA__MEMORY_SIZE
 
     @cache_on_self
     def api_key__name(self):
@@ -37,14 +39,24 @@ class Deploy__Serverless__Fast_API(Type_Safe):
 
     @cache_on_self
     def deploy_lambda(self):
-        with Deploy_Lambda(run, lambda_name=self.lambda_name()) as _:
-            _.add_osbot_aws()
+        kwargs = dict(lambda_name       = self.lambda_name()    ,
+                      stage             = self.stage            ,
+                      ephemeral_storage = self.ephemeral_storage,
+                      memory_size       = self.memory_size      )
+        with Deploy_Lambda(run, **kwargs) as _:
+            _.add_file__boto3__lambda()                     # this file allows the dynamically load of dependencies
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__NAME , self.api_key__name ())
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, self.api_key__value())
             return _
 
-    # main methods
+    def delete(self):
+        return self.lambda_function().delete()
 
+    def create(self):
+        if self.create_or_update__lambda_function():
+            self.create__lambda_function__url()
+            return True
+        return False
 
     def create_or_update__lambda_function(self):
         with self.deploy_lambda() as _:
@@ -66,11 +78,25 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                 function_url = result.get('function_url_create').get('FunctionUrl')
             return function_url
 
+    def invoke(self, payload=None):
+        return self.lambda_function().invoke(payload)
+
+    def invoke__function_url(self, path=''):
+        with self.lambda_function() as _:
+            url     = _.function_url() +  path
+            headers = { self.api_key__name(): self.api_key__value()}
+            return GET_json(url, headers=headers)
+
+    def lambda_configuration(self):
+        return obj(self.lambda_function().info().get('Configuration'))
+
     def lambda_name(self):
-        return f'{BASE__LAMBDA_NAME}__{self.stage}'
+        return BASE__LAMBDA_NAME__FAST_API__SERVERLESS
 
     def lambda_function(self):
         return self.deploy_lambda().lambda_function()
+
+
 
     def lambda_files_bucket_name(self):
         return self.lambda_function().s3_bucket
@@ -79,7 +105,7 @@ class Deploy__Serverless__Fast_API(Type_Safe):
 
         kwargs = dict(bucket__osbot_lambdas__exists = self.s3().bucket_exists(self.lambda_files_bucket_name()),
                       bucket__osbot_lambdas__name   = self.lambda_files_bucket_name(),
-                      current_aws_region            = self.aws_config().region_name())
+                      current_aws_region            = self.aws_config.region_name())
 
         aws_setup = Schema__AWS_Setup__Serverless__Fast_API(**kwargs)
         with aws_setup as _:
@@ -91,10 +117,17 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                     raise Exception(result)
         return aws_setup
 
+
     def upload_lambda_dependencies_to_s3(self):
-        with Lambda__Upload_Package() as _:
-            return _.upload_lambda_dependencies(LAMBDA_DEPENDENCIES)
-            # status__packages = {}
+        upload_results = {}
+        for package_name in LAMBDA_DEPENDENCIES:
+            with Lambda__Dependency(package_name=package_name) as _:
+                upload_results[package_name] = _.install_and_upload()
+        return upload_results
+
+        # with Lambda__Upload_Package() as _:
+        #     return _.upload_lambda_dependencies(LAMBDA_DEPENDENCIES)
+        #     status__packages = {}
             # for package in LAMBDA_DEPENDENCIES:
             #     if
             #     with capture_duration()  as duration__install_locally:
