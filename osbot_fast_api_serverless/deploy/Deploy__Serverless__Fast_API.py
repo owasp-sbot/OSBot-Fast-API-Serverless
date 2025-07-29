@@ -1,3 +1,4 @@
+from osbot_utils.utils.Objects                                                 import obj
 from osbot_aws.aws.lambda_.Lambda                                              import DEFAULT__LAMBDA__EPHEMERAL_STORAGE, DEFAULT__LAMBDA__MEMORY_SIZE
 from osbot_aws.aws.lambda_.dependencies.Lambda__Dependency                     import Lambda__Dependency
 from osbot_utils.helpers.Random_Guid                                           import Random_Guid
@@ -39,13 +40,13 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                       ephemeral_storage = self.ephemeral_storage,
                       memory_size       = self.memory_size      )
         with Deploy_Lambda(run, **kwargs) as _:
-            #_.add_osbot_aws()
             _.add_file__boto3__lambda()                     # this file allows the dynamically load of dependencies
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__NAME , self.api_key__name ())
             _.set_env_variable(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, self.api_key__value())
             return _
 
-    # main methods
+    def delete_function(self):
+        return self.lambda_function().delete()
 
 
     def create_or_update__lambda_function(self):
@@ -68,11 +69,16 @@ class Deploy__Serverless__Fast_API(Type_Safe):
                 function_url = result.get('function_url_create').get('FunctionUrl')
             return function_url
 
+    def lambda_configuration(self):
+        return obj(self.lambda_function().info().get('Configuration'))
+
     def lambda_name(self):
         return BASE__LAMBDA_NAME__FAST_API__SERVERLESS
 
     def lambda_function(self):
         return self.deploy_lambda().lambda_function()
+
+
 
     def lambda_files_bucket_name(self):
         return self.lambda_function().s3_bucket
