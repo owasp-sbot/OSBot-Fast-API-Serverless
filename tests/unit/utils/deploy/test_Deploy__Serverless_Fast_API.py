@@ -104,8 +104,8 @@ class test_Deploy__Serverless_Fast_API(TestCase):
         with self.deploy_serverless_fast_api as _:
             with _.s3() as _:
                 dependencies_zips = _.folder_files('000000000000--osbot-lambdas--us-east-1', 'lambdas-dependencies')
-                for package_name in ['mangum.zip', 'osbot-fast-api.zip']:
-                    assert package_name in dependencies_zips
+                for package_name in LAMBDA_DEPENDENCIES:
+                    assert f"{package_name}.zip" in dependencies_zips
 
     def test_6_delete_lamda_function(self):
         with self.deploy_serverless_fast_api as _:
