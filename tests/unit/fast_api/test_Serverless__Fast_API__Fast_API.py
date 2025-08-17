@@ -31,9 +31,9 @@ class test_Serverless__Fast_API__Fast_API(TestCase):
 
     def test__client__root_path(self):
         path                = '/info/version'
-        auth_key_name       = get_env(ENV_VAR__FAST_API__AUTH__API_KEY__NAME )
-        auth_key_value      = get_env(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE)
-        headers             = {auth_key_name: auth_key_value}
+        auth_key_name       = get_env(ENV_VAR__FAST_API__AUTH__API_KEY__NAME  )
+        auth_key_value      = get_env(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE )
+        headers             = { auth_key_name: auth_key_value}
 
         response__no_auth   = self.client.get(url=path                 )
         response__with_auth = self.client.get(url=path, headers=headers)
@@ -55,6 +55,6 @@ class test_Serverless__Fast_API__Fast_API(TestCase):
             assert _.is_local_stack_configured_and_available() is True
 
 
-    def test__config_fast_api_routes(self):
+    def test__config_Fast_API__Routes(self):
         assert self.fast_api.routes_paths() == ROUTES_PATHS__INFO
 

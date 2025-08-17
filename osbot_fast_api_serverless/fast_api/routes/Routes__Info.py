@@ -1,9 +1,9 @@
-from osbot_fast_api.api.Fast_API_Routes      import Fast_API_Routes
+from osbot_fast_api.api.routes.Fast_API__Routes      import Fast_API__Routes
 from osbot_fast_api_serverless.utils.Version import version__osbot_fast_api_serverless
 
 ROUTES_PATHS__INFO = ['/info/version']
 
-class Routes__Info(Fast_API_Routes):
+class Routes__Info(Fast_API__Routes):
     tag :str = 'info'
 
 
