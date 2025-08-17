@@ -6,16 +6,18 @@ from osbot_utils.utils.Env                                                      
 from osbot_fast_api.api.Fast_API                                                    import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
 from osbot_aws.deploy.Deploy_Lambda                                                 import Deploy_Lambda
 from osbot_utils.utils.Objects                                                      import __
+from osbot_fast_api_serverless.fast_api.lambda_handler                              import LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.utils.Version                                        import version__osbot_fast_api_serverless
 from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API                  import Deploy__Serverless__Fast_API, BASE__LAMBDA_NAME__FAST_API__SERVERLESS
 from osbot_fast_api_serverless.deploy.Schema__AWS_Setup__Serverless__Fast_API       import Schema__AWS_Setup__Serverless__Fast_API
+from osbot_fast_api_serverless.utils.testing.skip_tests                             import skip__if_not__in_github_actions
 from tests.serverless_fast_api__objs_for_tests                                      import Serverless__Fast_API__TEST__AWS_ACCOUNT_ID, Serverless__Fast_API__TEST__AWS_DEFAULT_REGION, setup_local_stack
 
 
 class test_Deploy__Serverless_Fast_API(TestCase):
     @classmethod
     def setUpClass(cls):
-        #skip__if_not__in_github_actions()
+        skip__if_not__in_github_actions()
         setup_local_stack()                                                 # deploy lambda to localstack
         cls.ephemeral_storage = 1048
         cls.memory_size       = 1024
@@ -43,7 +45,7 @@ class test_Deploy__Serverless_Fast_API(TestCase):
 
             status__packages = _.upload_lambda_dependencies_to_s3()
             for package_name, status__package in status__packages.items():
-                assert package_name                  in ['mangum', 'osbot-fast-api']
+                assert package_name                  in LAMBDA_DEPENDENCIES
                 assert list_set(status__package)     == ['local_result', 's3_exists']
                 assert status__package['s3_exists']  is True
                 assert type(status__package['local_result']) is Schema__Lambda__Dependency__Local_Install__Data
@@ -69,8 +71,8 @@ class test_Deploy__Serverless_Fast_API(TestCase):
             lambda_configuration = _.lambda_function().info().get('Configuration')
 
             assert lambda_configuration.get('Architectures'   )                  == ['x86_64']
-            assert lambda_configuration.get('Environment'     ).get('Variables') == {'FAST_API__AUTH__API_KEY__NAME' : get_env(ENV_VAR__FAST_API__AUTH__API_KEY__NAME ),
-                                                                                     'FAST_API__AUTH__API_KEY__VALUE': get_env(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE)}
+            assert lambda_configuration.get('Environment'     ).get('Variables') == { ENV_VAR__FAST_API__AUTH__API_KEY__NAME : get_env(ENV_VAR__FAST_API__AUTH__API_KEY__NAME ),
+                                                                                      ENV_VAR__FAST_API__AUTH__API_KEY__VALUE: get_env(ENV_VAR__FAST_API__AUTH__API_KEY__VALUE)}
             assert lambda_configuration.get('EphemeralStorage').get('Size') == self.ephemeral_storage
             assert lambda_configuration.get('FunctionName'    )             == 'fast-api__serverless__dev'
             assert lambda_configuration.get('MemorySize'      )             == self.memory_size
