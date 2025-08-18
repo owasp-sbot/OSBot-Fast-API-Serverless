@@ -1,5 +1,5 @@
-from osbot_fast_api.api.routes.Fast_API__Routes      import Fast_API__Routes
-from osbot_fast_api_serverless.utils.Version import version__osbot_fast_api_serverless
+from osbot_fast_api.api.routes.Fast_API__Routes     import Fast_API__Routes
+from osbot_fast_api_serverless.utils.Version        import version__osbot_fast_api_serverless
 
 ROUTES_PATHS__INFO = ['/info/version']
 
