@@ -13,7 +13,6 @@ python            = "^3.12"
 osbot-aws         = "*"
 osbot-fast-api    = "*"
 mangum            = "*"
-pytest = "^8.4.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
