@@ -34,18 +34,18 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "boto3"
-version = "1.40.27"
+version = "1.40.30"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "boto3-1.40.27-py3-none-any.whl", hash = "sha256:397d8cde7924f03b25eb553d5ed69293697dbfa1ca29b07369b3fa2df8318eca"},
-    {file = "boto3-1.40.27.tar.gz", hash = "sha256:bf1e0f5aa79dbeedff14926dc2eb1b57bc119fa9015a190a24b6cd5bf9a60e9a"},
+    {file = "boto3-1.40.30-py3-none-any.whl", hash = "sha256:04e89abf61240857bf7dec160e22f097eec68c502509b2bb3c5010a22cb91052"},
+    {file = "boto3-1.40.30.tar.gz", hash = "sha256:e95db539c938710917f4cb4fc5915f71b27f2c836d949a1a95df7895d2e9ec8b"},
 ]
 
 [package.dependencies]
-botocore = ">=1.40.27,<1.41.0"
+botocore = ">=1.40.30,<1.41.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.14.0,<0.15.0"
 
@@ -54,14 +54,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.40.27"
+version = "1.40.30"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "botocore-1.40.27-py3-none-any.whl", hash = "sha256:47441c94913740f5c24abf3d7f6fa534f12705e4c6669cd2e8443f3b3ca9d7ca"},
-    {file = "botocore-1.40.27.tar.gz", hash = "sha256:f7cb28668751d85adc7f17929efa684640d8e2739800a86a05d4bc38f8443d1c"},
+    {file = "botocore-1.40.30-py3-none-any.whl", hash = "sha256:1d87874ad81234bec3e83f9de13618f67ccdfefd08d6b8babc041cd45007447e"},
+    {file = "botocore-1.40.30.tar.gz", hash = "sha256:8a74f77cfe5c519826d22f7613f89544cbb8491a1a49d965031bd997f89a8e3f"},
 ]
 
 [package.dependencies]
@@ -315,14 +315,14 @@ files = [
 
 [[package]]
 name = "osbot-aws"
-version = "2.39.4"
+version = "2.39.5"
 description = "OWASP Security Bot - AWS"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "osbot_aws-2.39.4-py3-none-any.whl", hash = "sha256:a02d47ed188d4d1dabf0a989f889f1e5ba7c7b688ac472d74e0a97b08acb09bc"},
-    {file = "osbot_aws-2.39.4.tar.gz", hash = "sha256:a947feb813303d006a3305396e49262eebd200ba4c6cdab17ccae2889d67ade0"},
+    {file = "osbot_aws-2.39.5-py3-none-any.whl", hash = "sha256:61036ec29b1cdedbf29f4d01f7655a6780fcbd58f45487ecd74ba0fd69b90a42"},
+    {file = "osbot_aws-2.39.5.tar.gz", hash = "sha256:d575a34ac388fa2fc5c240db702332d73c0ceea8ef30e6a55cd14b4e6cf60069"},
 ]
 
 [package.dependencies]
@@ -331,14 +331,14 @@ osbot-utils = "*"
 
 [[package]]
 name = "osbot-fast-api"
-version = "0.23.0"
+version = "0.24.0"
 description = "OWASP Security Bot - Fast API"
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "osbot_fast_api-0.23.0-py3-none-any.whl", hash = "sha256:64cbfe1439a3541fedc7ccf4b1b8e536310600a276ae828d63b7bcaaa5fa5e86"},
-    {file = "osbot_fast_api-0.23.0.tar.gz", hash = "sha256:dee0ab1889e33e87322baa39d490683765d0034bdcb42ec2a22f7dfe799bf190"},
+    {file = "osbot_fast_api-0.24.0-py3-none-any.whl", hash = "sha256:d32bde375885745c5058f41dc25a4c983865552ba06f954a55da193e125bf0a4"},
+    {file = "osbot_fast_api-0.24.0.tar.gz", hash = "sha256:248b07ea8065def87389f2bee4806587f8b1762eb676d355a64837ce359b3f17"},
 ]
 
 [package.dependencies]
@@ -350,26 +350,26 @@ uvicorn = "*"
 
 [[package]]
 name = "osbot-utils"
-version = "2.91.0"
+version = "3.3.0"
 description = "OWASP Security Bot - Utils"
 optional = false
 python-versions = "<4.0,>=3.7"
 groups = ["main"]
 files = [
-    {file = "osbot_utils-2.91.0-py3-none-any.whl", hash = "sha256:ba3f62973a4792ff63724d4ddf38ff034e4f5070eb9455f50819bf2db9f82783"},
-    {file = "osbot_utils-2.91.0.tar.gz", hash = "sha256:1925cd1c3551bae1ce99e7d74b50cb06323d662f146cf3c6565b1ff20b7814c6"},
+    {file = "osbot_utils-3.3.0-py3-none-any.whl", hash = "sha256:19589de40a4741051b9854dcbec427e844f3b4d7411cf5a32a04b0f3caf954fa"},
+    {file = "osbot_utils-3.3.0.tar.gz", hash = "sha256:d7033ba32d0908d0ca519de5f7fdc3926e4700425681db80fa0b37e359a5c646"},
 ]
 
 [[package]]
 name = "pydantic"
-version = "2.11.7"
+version = "2.11.9"
 description = "Data validation using Python type hints"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "pydantic-2.11.7-py3-none-any.whl", hash = "sha256:dde5df002701f6de26248661f6835bbe296a47bf73990135c7d07ce741b9623b"},
-    {file = "pydantic-2.11.7.tar.gz", hash = "sha256:d989c3c6cb79469287b1569f7447a17848c998458d49ebe294e975b9baf0f0db"},
+    {file = "pydantic-2.11.9-py3-none-any.whl", hash = "sha256:c42dd626f5cfc1c6950ce6205ea58c93efa406da65f479dcb4029d5934857da2"},
+    {file = "pydantic-2.11.9.tar.gz", hash = "sha256:6b8ffda597a14812a7975c90b82a8a2e777d9257aba3453f973acd3c032a18e2"},
 ]
 
 [package.dependencies]
