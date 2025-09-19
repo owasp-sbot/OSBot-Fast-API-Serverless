@@ -1,4 +1,4 @@
 # OSBot-Fast-API-Serverless
 Repo for OSBot-Fast-API-Serverless
 
-![Current Release](https://img.shields.io/badge/release-v1.19.1-blue)
+![Current Release](https://img.shields.io/badge/release-v1.20.0-blue)
