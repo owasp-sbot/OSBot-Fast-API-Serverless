@@ -1,6 +1,6 @@
 from osbot_aws.aws.lambda_.boto3__lambda import load_dependencies       # using the lightweight file (which only has the boto3 calls required to load_dependencies)
 
-LAMBDA_DEPENDENCIES =  ['osbot-fast-api==v0.25.0', 'mangum']
+LAMBDA_DEPENDENCIES =  ['osbot-fast-api==v0.28.0', 'mangum']
 
 load_dependencies(LAMBDA_DEPENDENCIES)
 
