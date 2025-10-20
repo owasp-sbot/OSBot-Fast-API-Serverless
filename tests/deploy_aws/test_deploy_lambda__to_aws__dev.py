@@ -2,7 +2,7 @@ import pytest
 from unittest                                                      import TestCase
 from osbot_fast_api.api.Fast_API                                   import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
 from osbot_utils.utils.Env                                         import get_env
-from osbot_utils.utils.Objects                                     import __
+from osbot_utils.testing.__                                        import __
 from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API import Deploy__Serverless__Fast_API
 
 

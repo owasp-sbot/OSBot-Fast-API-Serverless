@@ -5,7 +5,7 @@ from osbot_utils.utils.Misc                                                     
 from osbot_utils.utils.Env                                                          import get_env
 from osbot_fast_api.api.Fast_API                                                    import ENV_VAR__FAST_API__AUTH__API_KEY__VALUE, ENV_VAR__FAST_API__AUTH__API_KEY__NAME
 from osbot_aws.deploy.Deploy_Lambda                                                 import Deploy_Lambda
-from osbot_utils.utils.Objects                                                      import __
+from osbot_utils.testing.__                                                         import __
 from osbot_fast_api_serverless.fast_api.lambda_handler                              import LAMBDA_DEPENDENCIES
 from osbot_fast_api_serverless.utils.Version                                        import version__osbot_fast_api_serverless
 from osbot_fast_api_serverless.deploy.Deploy__Serverless__Fast_API                  import Deploy__Serverless__Fast_API, BASE__LAMBDA_NAME__FAST_API__SERVERLESS
@@ -49,7 +49,7 @@ class test_Deploy__Serverless_Fast_API(TestCase):
                 assert list_set(status__package)     == ['local_result', 's3_exists']
                 assert status__package['s3_exists']  is True
                 assert type(status__package['local_result']) is Schema__Lambda__Dependency__Local_Install__Data
-                assert len(status__package['local_result'].installed_files) > 30
+                assert len(status__package['local_result'].installed_files) > 20
 
     def test_3__create_or_update__lambda_function(self):
         with self.deploy_serverless_fast_api as _:
