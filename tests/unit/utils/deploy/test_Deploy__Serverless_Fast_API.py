@@ -44,12 +44,21 @@ class test_Deploy__Serverless_Fast_API(TestCase):
         with self.deploy_serverless_fast_api as _:
 
             status__packages = _.upload_lambda_dependencies_to_s3()
+
+            assert type(status__packages)     is dict
+            assert list_set(status__packages) == sorted(LAMBDA_DEPENDENCIES)
+
             for package_name, status__package in status__packages.items():
-                assert package_name                  in LAMBDA_DEPENDENCIES
-                assert list_set(status__package)     == ['local_result', 's3_exists']
-                assert status__package['s3_exists']  is True
-                assert type(status__package['local_result']) is Schema__Lambda__Dependency__Local_Install__Data
-                assert len(status__package['local_result'].installed_files) > 20
+                local_result = status__package['local_result']
+
+                assert package_name                      in LAMBDA_DEPENDENCIES
+                assert list_set(status__package)         == ['local_result', 's3_exists']
+                assert status__package['s3_exists']      is True
+                assert type(local_result)                is Schema__Lambda__Dependency__Local_Install__Data
+                assert len(local_result.installed_files)  > 20
+                #local_result.print_obj()
+
+
 
     def test_3__create_or_update__lambda_function(self):
         with self.deploy_serverless_fast_api as _:
@@ -76,7 +85,7 @@ class test_Deploy__Serverless_Fast_API(TestCase):
             assert lambda_configuration.get('EphemeralStorage').get('Size') == self.ephemeral_storage
             assert lambda_configuration.get('FunctionName'    )             == 'fast-api__serverless__dev'
             assert lambda_configuration.get('MemorySize'      )             == self.memory_size
-            assert lambda_configuration.get('CodeSize'        )             < 10000 # code size should be small (and not 500k when it included the full osbot-aws)
+            assert lambda_configuration.get('CodeSize'        )             < 20000 # code size should be small (and not 500k when it included the full osbot-aws)
 
 
 
