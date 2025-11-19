@@ -1,6 +1,6 @@
 [tool.poetry]
 name        = "osbot_fast_api_serverless"
-version     = "v1.28.1"
+version     = "v1.29.0"
 description = "OSBot-Fast-API-Serverless"
 authors     = ["Dinis Cruz <dinis.cruz@owasp.org>"]
 license     = "Apache 2.0"
