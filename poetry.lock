@@ -45,18 +45,18 @@ trio = ["trio (>=0.31.0)", "trio (>=0.32.0)"]
 
 [[package]]
 name = "boto3"
-version = "1.42.0"
+version = "1.42.9"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "boto3-1.42.0-py3-none-any.whl", hash = "sha256:af32b7f61dd6293cad728ec205bcb3611ab1bf7b7dbccfd0f2bd7b9c9af96039"},
-    {file = "boto3-1.42.0.tar.gz", hash = "sha256:9c67729a6112b7dced521ea70b0369fba138e89852b029a7876041cd1460c084"},
+    {file = "boto3-1.42.9-py3-none-any.whl", hash = "sha256:d21d22af9aeb1bad8e9b670a221d6534c0120f7e7baf523dafaca83f1f5c3f90"},
+    {file = "boto3-1.42.9.tar.gz", hash = "sha256:cdd4cc3e5bb08ed8a0c5cc77eca78f98f0239521de0991f14e44b788b0c639b2"},
 ]
 
 [package.dependencies]
-botocore = ">=1.41.6,<1.42.0"
+botocore = ">=1.42.9,<1.43.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.16.0,<0.17.0"
 
@@ -65,14 +65,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.41.6"
+version = "1.42.9"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "botocore-1.41.6-py3-none-any.whl", hash = "sha256:963cc946e885acb941c96e7d343cb6507b479812ca22566ceb3e9410d0588de0"},
-    {file = "botocore-1.41.6.tar.gz", hash = "sha256:08fe47e9b306f4436f5eaf6a02cb6d55c7745d13d2d093ce5d917d3ef3d3df75"},
+    {file = "botocore-1.42.9-py3-none-any.whl", hash = "sha256:f99ba2ca34e24c4ebec150376c815646970753c032eb84f230874b2975a185a8"},
+    {file = "botocore-1.42.9.tar.gz", hash = "sha256:74f69bfd116cc7c8215481284957eecdb48580e071dd50cb8c64356a866abd8c"},
 ]
 
 [package.dependencies]
@@ -81,7 +81,7 @@ python-dateutil = ">=2.1,<3.0.0"
 urllib3 = {version = ">=1.25.4,<2.2.0 || >2.2.0,<3", markers = "python_version >= \"3.10\""}
 
 [package.extras]
-crt = ["awscrt (==0.29.1)"]
+crt = ["awscrt (==0.29.2)"]
 
 [[package]]
 name = "certifi"
@@ -248,14 +248,14 @@ files = [
 
 [[package]]
 name = "fastapi"
-version = "0.123.4"
+version = "0.124.4"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "fastapi-0.123.4-py3-none-any.whl", hash = "sha256:fc2b5cbc10fa05f4f22d87ef7ebc8993b5110ffd9850c08e1fc35a0da37f492e"},
-    {file = "fastapi-0.123.4.tar.gz", hash = "sha256:c2d0ac82f3534c8e35692fda67e2412ac60bad846bb903a65cd8145a65741474"},
+    {file = "fastapi-0.124.4-py3-none-any.whl", hash = "sha256:6d1e703698443ccb89e50abe4893f3c84d9d6689c0cf1ca4fad6d3c15cf69f15"},
+    {file = "fastapi-0.124.4.tar.gz", hash = "sha256:0e9422e8d6b797515f33f500309f6e1c98ee4e85563ba0f2debb282df6343763"},
 ]
 
 [package.dependencies]
@@ -341,14 +341,14 @@ osbot-utils = "*"
 
 [[package]]
 name = "osbot-fast-api"
-version = "0.31.0"
+version = "0.32.0"
 description = "OWASP Security Bot - Fast API"
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "osbot_fast_api-0.31.0-py3-none-any.whl", hash = "sha256:06fb7ef7a4943a3c350c10d13ce5b94c538fa0e5d2a74744e3c0d793228fc9d8"},
-    {file = "osbot_fast_api-0.31.0.tar.gz", hash = "sha256:f08e95444be639431cc051a9b219b16046c41d8150888506827fab4f4756fb95"},
+    {file = "osbot_fast_api-0.32.0-py3-none-any.whl", hash = "sha256:fd7b51c1746255433915e01acb5be3d65aa70b689ecc31c92c9425eda8359e55"},
+    {file = "osbot_fast_api-0.32.0.tar.gz", hash = "sha256:fb7c5dcc729c80ef92fdcb543870333712393af1bea23f0d997b78d7a721712e"},
 ]
 
 [package.dependencies]
@@ -359,14 +359,14 @@ uvicorn = "*"
 
 [[package]]
 name = "osbot-utils"
-version = "3.53.0"
+version = "3.55.0"
 description = "OWASP Security Bot - Utils"
 optional = false
 python-versions = "<4.0,>=3.7"
 groups = ["main"]
 files = [
-    {file = "osbot_utils-3.53.0-py3-none-any.whl", hash = "sha256:c5915397efb161c5554970696f9331bf09bb9bc7510507ab6495c30ae63cf91c"},
-    {file = "osbot_utils-3.53.0.tar.gz", hash = "sha256:87401a18eb47f16a9e82f6f22d74638af07bc7fcbd80ccc4aa1394075a2cde2a"},
+    {file = "osbot_utils-3.55.0-py3-none-any.whl", hash = "sha256:d1de616f16864bc96369b001bd20900a6c7100fd847efe3bad16f9650615162f"},
+    {file = "osbot_utils-3.55.0.tar.gz", hash = "sha256:2d9a3ddc8642e37940c30691fe422c6fb246304fc97f2c29da31393e0151d625"},
 ]
 
 [[package]]
@@ -640,21 +640,21 @@ typing-extensions = ">=4.12.0"
 
 [[package]]
 name = "urllib3"
-version = "2.5.0"
+version = "2.6.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc"},
-    {file = "urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760"},
+    {file = "urllib3-2.6.2-py3-none-any.whl", hash = "sha256:ec21cddfe7724fc7cb4ba4bea7aa8e2ef36f607a4bab81aa6ce42a13dc3f03dd"},
+    {file = "urllib3-2.6.2.tar.gz", hash = "sha256:016f9c98bb7e98085cb2b4b17b87d2c702975664e4f060c6532e64d1c1a5e797"},
 ]
 
 [package.extras]
-brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
+brotli = ["brotli (>=1.2.0)", "brotlicffi (>=1.2.0.0)"]
 h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
-zstd = ["zstandard (>=0.18.0)"]
+zstd = ["backports-zstd (>=1.0.0)"]
 
 [[package]]
 name = "uvicorn"
