@@ -45,18 +45,18 @@ trio = ["trio (>=0.31.0)", "trio (>=0.32.0)"]
 
 [[package]]
 name = "boto3"
-version = "1.42.28"
+version = "1.42.39"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "boto3-1.42.28-py3-none-any.whl", hash = "sha256:7994bc2a094c1894f6a4221a1696c5d18af6c9c888191051866f1d05c4fba431"},
-    {file = "boto3-1.42.28.tar.gz", hash = "sha256:7d56c298b8d98f5e9b04cf5d6627f68e7792e25614533aef17f815681b5e1096"},
+    {file = "boto3-1.42.39-py3-none-any.whl", hash = "sha256:d9d6ce11df309707b490d2f5f785b761cfddfd6d1f665385b78c9d8ed097184b"},
+    {file = "boto3-1.42.39.tar.gz", hash = "sha256:d03f82363314759eff7f84a27b9e6428125f89d8119e4588e8c2c1d79892c956"},
 ]
 
 [package.dependencies]
-botocore = ">=1.42.28,<1.43.0"
+botocore = ">=1.42.39,<1.43.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.16.0,<0.17.0"
 
@@ -65,14 +65,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.42.28"
+version = "1.42.39"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "botocore-1.42.28-py3-none-any.whl", hash = "sha256:d26c7a0851489ce1a18279f9802fe434bd736ea861d4888cc2c7d83fb1f6af8f"},
-    {file = "botocore-1.42.28.tar.gz", hash = "sha256:0c15e78d1accf97df691083331f682e97b1bef73ef12dcdaadcf652abf9c182c"},
+    {file = "botocore-1.42.39-py3-none-any.whl", hash = "sha256:9e0d0fed9226449cc26fcf2bbffc0392ac698dd8378e8395ce54f3ec13f81d58"},
+    {file = "botocore-1.42.39.tar.gz", hash = "sha256:0f00355050821e91a5fe6d932f7bf220f337249b752899e3e4cf6ed54326249e"},
 ]
 
 [package.dependencies]
@@ -298,14 +298,14 @@ all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2
 
 [[package]]
 name = "jmespath"
-version = "1.0.1"
+version = "1.1.0"
 description = "JSON Matching Expressions"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "jmespath-1.0.1-py3-none-any.whl", hash = "sha256:02e2e4cc71b5bcab88332eebf907519190dd9e6e82107fa7f83b1003a6252980"},
-    {file = "jmespath-1.0.1.tar.gz", hash = "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"},
+    {file = "jmespath-1.1.0-py3-none-any.whl", hash = "sha256:a5663118de4908c91729bea0acadca56526eb2698e83de10cd116ae0f4e97c64"},
+    {file = "jmespath-1.1.0.tar.gz", hash = "sha256:472c87d80f36026ae83c6ddd0f1d05d4e510134ed462851fd5f754c8c3cbb88d"},
 ]
 
 [[package]]
@@ -341,14 +341,14 @@ osbot-utils = "*"
 
 [[package]]
 name = "osbot-fast-api"
-version = "0.32.0"
+version = "0.38.0"
 description = "OWASP Security Bot - Fast API"
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "osbot_fast_api-0.32.0-py3-none-any.whl", hash = "sha256:fd7b51c1746255433915e01acb5be3d65aa70b689ecc31c92c9425eda8359e55"},
-    {file = "osbot_fast_api-0.32.0.tar.gz", hash = "sha256:fb7c5dcc729c80ef92fdcb543870333712393af1bea23f0d997b78d7a721712e"},
+    {file = "osbot_fast_api-0.38.0-py3-none-any.whl", hash = "sha256:977c79da6b2a2cc786fe2f82b07741563f729b8df60156c40b7afad43b404c6a"},
+    {file = "osbot_fast_api-0.38.0.tar.gz", hash = "sha256:d495e2758e0768c6949214d8bcab02e09b2868f8aa82f90feb09f78726f7b450"},
 ]
 
 [package.dependencies]
@@ -359,14 +359,14 @@ uvicorn = "*"
 
 [[package]]
 name = "osbot-utils"
-version = "3.70.0"
+version = "3.72.0"
 description = "OWASP Security Bot - Utils"
 optional = false
 python-versions = "<4.0,>=3.7"
 groups = ["main"]
 files = [
-    {file = "osbot_utils-3.70.0-py3-none-any.whl", hash = "sha256:65bc21c7c19702e3749a4bc4d1266c25f843b035c4ffc4e55bf16e9b500afeee"},
-    {file = "osbot_utils-3.70.0.tar.gz", hash = "sha256:8293e493900add780a7ea45eefd863b474e4aa839ced9fc965289566a4b87c3e"},
+    {file = "osbot_utils-3.72.0-py3-none-any.whl", hash = "sha256:0dda6cdd3e0359d74e33ff63c30b7d2386fe099c021691c16ac0b0af144dfe6a"},
+    {file = "osbot_utils-3.72.0.tar.gz", hash = "sha256:d8665738b228016d8d3e54b80298b278c3d75f66ef885fd3a7453fcd8cc84813"},
 ]
 
 [[package]]
