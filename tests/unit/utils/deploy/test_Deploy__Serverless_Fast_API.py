@@ -17,6 +17,8 @@ from tests.serverless_fast_api__objs_for_tests                                  
 class test_Deploy__Serverless_Fast_API(TestCase):
     @classmethod
     def setUpClass(cls):
+        import pytest
+        pytest.skip('LocalStack-based test — deprecating in favour of real AWS deploy tests')
         #skip__if_not__in_github_actions()
         setup_local_stack()                                                 # deploy lambda to localstack
         cls.ephemeral_storage = 1048
